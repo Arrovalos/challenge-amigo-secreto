@@ -2,7 +2,7 @@
 
 ```Qué debo hacer:```
 
--hacer un array con datos string recibidos en el prompt
--elegir una posición random del array
--mostrar resultado en pantalla
--reiniciar al recibir nuevos datos
+- Hacer un array con datos string recibidos en el prompt
+- Elegir una posición random del array
+- Mostrar resultado en pantalla
+- Reiniciar al recibir nuevos datos
