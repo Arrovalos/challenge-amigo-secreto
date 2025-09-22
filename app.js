@@ -21,22 +21,59 @@ function mostrarMensajeTemporal(selector, mensaje, duracion = 1000) {
 
 function agregarAmigo() {
     let amigo = document.getElementById('amigo').value.trim();
-    if (amigo === " ") {
+
+    // Regex: solo letras (mayúsculas, minúsculas, acentos y espacios)
+    let regexNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+
+    if (!regexNombre.test(amigo) || amigo.length < 2) {
         asignarTextoElemento('h2','Por favor escribe un nombre válido');
-        return 
+        return;
     }
 
-    if (!isNaN(amigo)) {
-        asignarTextoElemento('h2','Por favor escribe un nombre válido');
-        return 
-    }
+    // Agregar a la lista
     nombreAmigos.push(amigo);
-    console.log(nombreAmigos);
-    console.log(nombreAmigos.length)
+
+    // Mostrar en pantalla
+    mostrarLista();
+
     limpiarCaja();
     mostrarMensajeTemporal('h2', '¡Amigo agregado exitosamente!', 1000);
 }
 
+function mostrarLista() {
+    let lista = document.getElementById('listaAmigos');
+    lista.innerHTML = ""; // limpiar antes de volver a mostrar
+    nombreAmigos.forEach(amigo => {
+        let li = document.createElement("li");
+        li.textContent = amigo;
+        lista.appendChild(li);
+    });
+}
+
 function limpiarCaja() {
     document.querySelector('#amigo').value = '';
+}
+
+function sortearAmigo() {
+    if (nombreAmigos.length === 0) {
+        asignarTextoElemento('h2','Agrega al menos un nombre antes de sortear');
+        return;
+    }
+
+    let indiceAleatorio = Math.floor(Math.random() * nombreAmigos.length);
+    let amigoSecreto = nombreAmigos[indiceAleatorio];
+
+    let resultado = document.getElementById('resultado');
+    resultado.innerHTML = `<li>🎉 Tu amigo secreto es: <strong>${amigoSecreto}</strong></li>`;
+
+    alert(`🎉 Tu amigo secreto es: ${amigoSecreto}`);
+
+    // Reiniciar juego
+    reiniciarJuego();
+}
+
+function reiniciarJuego() {
+    nombreAmigos = [];
+    document.getElementById('listaAmigos').innerHTML = "";
+    document.getElementById('resultado').innerHTML = "";
 }
